@@ -1,12 +1,19 @@
+------------- Search by ID ---------------
 1004 Rajesh Sharma
 1005 not found
-Rajesh Sharma
-Divya Rajesh
-Sony Rajesh
-Rajesh Nair
 1006 Mark Antony
 1009 Arun Kumar
 1105 Najeem Ali
+------------------------------------------------------------ Search by Name: Rajesh  -----------
+Rajesh Sharma
+Divya Rajeshwari
+Sony Rajesh
+Rajesh Nair
+------------------------------------------------------------ Search by Name: Anvar  -----------
+Anvar Mohamed
+------------------------------------------------------------- List Employees by Designation: Project Manager  -----------
 Jordan Leon, 1012
 Sony Rajesh, 1015
 Anvar Mohamed, 1017
+------------------------------------------------------------- List Employees by Designation: Software Engg  -----------
+Rajesh Nair, 1103

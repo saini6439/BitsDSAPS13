@@ -36,27 +36,36 @@ class binary_search_tree:
         else:
             print("Value already in tree!")
 
-    def print_name(self,empname,file1):
+    def print_name(self,empname,file1,outputdataname):
         if self.root != None:
-            self._print_name(self.root,empname,file1)
-
-    def _print_name(self, cur_node,empname,file1):
+            data = self._print_name(self.root,empname,file1,outputdataname)
+        return data
+    def _print_name(self, cur_node,empname,file1,outputdataname):
+        data=[]
         if cur_node != None:
-            self._print_name(cur_node.left_child,empname,file1)
+            self._print_name(cur_node.left_child,empname,file1,outputdataname)
             if empname in cur_node.value[0]:
-                file1.write(cur_node.value[0]+"\n")
-            self._print_name(cur_node.right_child,empname,file1)
+                outputdataname.append(cur_node.value[0]+"\n")
 
-    def print_designation(self, empdeg, file1):
+                #print(outputdataname)
+                #file1.write(cur_node.value[0]+"\n")
+            self._print_name(cur_node.right_child,empname,file1,outputdataname)
+        #print("op",outputdataname)
+        return outputdataname
+
+
+    def print_designation(self, empdeg, file1,outputdatadeg):
         if self.root != None:
-            self._print_designation(self.root, empdeg, file1)
-
-    def _print_designation(self, cur_node, empdeg, file1):
+            data = self._print_designation(self.root, empdeg, file1,outputdatadeg)
+        return data
+    def _print_designation(self, cur_node, empdeg, file1,outputdatadeg):
         if cur_node != None:
-            self._print_designation(cur_node.left_child, empdeg, file1)
+            self._print_designation(cur_node.left_child, empdeg, file1,outputdatadeg)
             if empdeg in cur_node.value[2]:
-                file1.write(cur_node.value[0] +", "+str(cur_node.value[1])+ "\n")
-            self._print_designation(cur_node.right_child, empdeg, file1)
+                outputdatadeg.append(cur_node.value[0] +", "+str(cur_node.value[1])+ "\n")
+                #file1.write(cur_node.value[0] +", "+str(cur_node.value[1])+ "\n")
+            self._print_designation(cur_node.right_child, empdeg, file1,outputdatadeg)
+        return outputdatadeg
 
     def height(self):
         if self.root != None:
@@ -226,23 +235,48 @@ class binary_search_tree:
     def read_prompts_data(self):
         f = open("promptsPS13.txt", "r")
         file1 = open("outputPS13.txt", "w")
-        outputdata=[]
+        outputdataid=[]
+        outputdataname = []
+        outputdatadeg = []
         for x in f:
-            # print(x)
-            result = re.match(r"Search.*:", x)
-            if (result.group() == "Search ID:"):
-                #print(int(x[11:]))
-                empname= tree.search(int(x[11:]))
-                #print(empid,type(empid))
-                #print(empname,empid)
-                opdata=str(int(x[11:]))+" "+empname+"\n"
-                file1.write(opdata)
-            elif (result.group() == "Search Name:"):
-                tree.print_name(x[13:-1],file1)
-                #print(opdata)
-            elif (result.group() == "Search Designation:"):
-                tree.print_designation(x[20:-1],file1)
+            if x != None:
+                result = re.match(r"Search.*:", x)
+                if (result.group() == "Search ID:"):
+                    #print(int(x[11:]))
+                    empname= tree.search(int(x[11:]))
+                    #print(empid,type(empid))
+                    #print(empname,empid)
+                    opdata=str(int(x[11:]))+" "+empname+"\n"
+                    outputdataid.append(opdata)
+                    #file1.write(opdata)
+                elif (result.group() == "Search Name:"):
+                    outputdataname.append(x)
+                    dataname=tree.print_name(x[13:-1],file1,outputdataname)
+                    #print("opname",dataname)
+                elif (result.group() == "Search Designation:"):
+                    outputdatadeg.append(x)
+                    datadeg = tree.print_designation(x[20:-1],file1,outputdatadeg)
+                    #print(datadeg)
                 #print(x[20:-1])
+        file1.write("------------- Search by ID ---------------\n")
+        for iddata in outputdataid:
+            file1.write(iddata)
+
+        for namedata in outputdataname:
+            result = re.match(r"Search Name:.*", namedata)
+            if(result):
+                #print(result.group())
+                file1.write("------------------------------------------------------------ Search by Name: " + result.group()[13:] + "  -----------\n")
+            else:
+                file1.write(namedata)
+        for degdata in outputdatadeg:
+            result = re.match(r"Search Designation:.*", degdata)
+            if(result):
+                #print(result.group())
+                file1.write("------------------------------------------------------------- List Employees by Designation: " + result.group()[20:] + "  -----------\n")
+            else:
+                file1.write(degdata)
+
         file1.close()
 
 
