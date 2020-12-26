@@ -61,20 +61,20 @@ class binary_search_tree:
         return outputdatadeg
 
 
-    def search(self, value):
+    def print_id(self, value):
         if self.root != None:
-            return self._search(value, self.root)
+            return self._print_id(value, self.root)
         else:
             return False
 
-    def _search(self, value, cur_node):
+    def _print_id(self, value, cur_node):
         if value == cur_node.value[1]:
             opdata=str(cur_node.value[0])
             return opdata
         elif value < cur_node.value[1] and cur_node.left_child != None:
-            return self._search(value, cur_node.left_child)
+            return self._print_id(value, cur_node.left_child)
         elif value > cur_node.value[1] and cur_node.right_child != None:
-            return self._search(value, cur_node.right_child)
+            return self._print_id(value, cur_node.right_child)
         return "not found"
 
     def read_alldata(self):
@@ -84,7 +84,7 @@ class binary_search_tree:
             empdata = [chunks[0], int(chunks[1].strip()), chunks[2].strip()]
             tree.insert(empdata)
 
-    def read_prompts_data(self):
+    def print_alldata(self):
         f = open("promptsPS13.txt", "r")
         file1 = open("outputPS13.txt", "w")
         outputdataid=[]
@@ -95,8 +95,11 @@ class binary_search_tree:
                 result = re.match(r"Search.*:", x)
                 if (result.group() == "Search ID:"):
                     if(len(x)!=11 and x[11:-1].isnumeric()):
-                        empname= tree.search(int(x[11:-1]))
+                        empname= tree.print_id(int(x[11:-1]))
                         opdata=str(int(x[11:]))+" "+empname+"\n"
+                        outputdataid.append(opdata)
+                    else:
+                        opdata = x[11:-1] + " Type Error\n"
                         outputdataid.append(opdata)
                 elif (result.group() == "Search Name:"):
                     outputdataname.append(x)
@@ -113,7 +116,8 @@ class binary_search_tree:
             if(result):
                 file1.write("-----------------------------------------------\n-------------------- Search by Name: " + result.group()[13:] + "  -----------\n")
             else:
-                file1.write(namedata)
+                if(namedata):
+                    file1.write(namedata)
 
         for degdata in outputdatadeg:
             result = re.match(r"Search Designation:.*", degdata)
@@ -123,8 +127,9 @@ class binary_search_tree:
                 file1.write(degdata)
         file1.write("-----------------------------------------------")
         file1.close()
+        f.close()
 
 if __name__ == '__main__':
     tree = binary_search_tree()
     tree.read_alldata()
-    tree.read_prompts_data()
+    tree.print_alldata()

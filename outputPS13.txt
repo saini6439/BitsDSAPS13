@@ -1,14 +1,10 @@
 ------------- Search by ID ---------------
-1000 not found
-1006 Mark Antony
+ABCD Type Error
+10244657 not found
 1009 Arun Kumar
 1105 Najeem Ali
 -----------------------------------------------
--------------------- Search by Name: Rajesh  -----------
-Rajesh Sharma
-Divya Rajeshwari
-Sony Rajesh
-Rajesh Nair
+-------------------- Search by Name: jss  -----------
 -----------------------------------------------
 -------------------- Search by Name: Anvar  -----------
 Anvar Mohamed
